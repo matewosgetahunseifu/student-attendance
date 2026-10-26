@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b32">
+  <title>SMIS | Student Management</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div><strong>SMIS</strong><span data-i18n="brandSubtitle">Student Management</span></div>
+      </div>
+      <div class="institution">
+        <div class="institution-logo">✦</div>
+        <div><strong data-i18n="institutionName">Demo Institution</strong><span data-i18n="institutionType">Institution workspace</span></div>
+      </div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span><span data-i18n="dashboard">Dashboard</span></button>
+        <button class="nav-item" data-page="register"><span class="nav-icon">♙</span><span data-i18n="register">Student Register</span></button>
+        <button class="nav-item" data-page="attendance"><span class="nav-icon">✓</span><span data-i18n="attendance">Attendance</span></button>
+        <button class="nav-item" data-page="assessment"><span class="nav-icon">▤</span><span data-i18n="assessment">Assessment</span></button>
+        <button class="nav-item" data-page="rank"><span class="nav-icon">↗</span><span data-i18n="rank">Rank</span></button>
+        <div class="nav-label" data-i18n="manage">MANAGE</div>
+        <button class="nav-item" data-page="reports"><span class="nav-icon">▧</span><span data-i18n="reports">Reports</span></button>
+        <button class="nav-item" data-page="settings"><span class="nav-icon">⚙</span><span data-i18n="settings">Settings</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar">AD</div>
+        <div class="user-label"><strong data-i18n="adminName">Demo Admin</strong><span data-i18n="adminRole">Main administrator</span></div>
+        <button class="icon-button" id="profileButton" title="Profile">⋯</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button menu-button" id="menuButton" aria-label="Open menu">☰</button>
+          <div><div class="eyebrow" data-i18n="workspace">WORKSPACE</div><div class="page-heading" id="pageHeading">Dashboard</div></div>
+        </div>
+        <div class="topbar-actions">
+          <label class="language-picker"><span class="sr-only">Language</span>
+            <select id="languageSelect" aria-label="Language"><option value="en">EN</option><option value="am">አማ</option></select>
+          </label>
+          <button class="icon-button notification-button" id="notificationButton" title="Notifications">♧<i></i></button>
+          <div class="top-avatar">AD</div>
+        </div>
+      </header>
+
+      <section class="page active-page" id="page-dashboard">
+        <div class="welcome-row">
+          <div><div class="eyebrow" data-i18n="overview">OVERVIEW</div><h1 data-i18n="welcomeTitle">Good morning, Admin 👋</h1><p data-i18n="welcomeText">Here’s what’s happening at your institution today.</p></div>
+          <div class="date-chip"><span>◷</span><span id="todayLabel">Today</span></div>
+        </div>
+        <div class="notice-banner">
+          <div class="notice-symbol">✦</div>
+          <div class="notice-copy"><strong data-i18n="prototypeTitle">Your SMIS workspace is ready to begin</strong><span data-i18n="prototypeText">This starter uses demo data only. Connect secure authentication and a database before adding real student records.</span></div>
+          <button class="banner-close" id="dismissBanner" aria-label="Dismiss notice">×</button>
+        </div>
+        <div class="section-title-row"><div><h2 data-i18n="snapshot">Institution snapshot</h2><p data-i18n="snapshotText">A quick look at your academic records</p></div><button class="button button-secondary" id="refreshButton">↻ <span data-i18n="refresh">Refresh</span></button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span data-i18n="totalStudents">Total students</span><span class="stat-icon green">♙</span></div><div class="stat-value" id="totalStudentsValue">0</div><div class="stat-foot"><span class="status-dot"></span><span data-i18n="registeredRecords">Registered records</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span data-i18n="presentToday">Present today</span><span class="stat-icon blue">✓</span></div><div class="stat-value" id="presentValue">0</div><div class="stat-foot"><span data-i18n="attendanceDemo">Attendance demo</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span data-i18n="absentToday">Absent today</span><span class="stat-icon red">!</span></div><div class="stat-value" id="absentValue">0</div><div class="stat-foot"><span data-i18n="needsFollowUp">May need follow-up</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span data-i18n="pendingResults">Pending results</span><span class="stat-icon amber">▤</span></div><div class="stat-value" id="pendingValue">0</div><div class="stat-foot"><span data-i18n="awaitingApproval">Awaiting approval</span></div></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel recent-panel">
+            <div class="panel-heading"><div><h2 data-i18n="recentStudents">Recently registered students</h2><p data-i18n="recentText">Latest records in this demo workspace</p></div><button class="text-button" data-go="register" data-i18n="viewAll">View all →</button></div>
+            <div class="table-wrap"><table><thead><tr><th data-i18n="student">STUDENT</th><th data-i18n="studentCode">STUDENT CODE</th><th data-i18n="department">DEPARTMENT</th><th data-i18n="status">STATUS</th></tr></thead><tbody id="recentStudentsBody"></tbody></table></div>
+            <div class="empty-state" id="recentEmpty"><div class="empty-icon">♙</div><strong data-i18n="noStudents">No students yet</strong><span data-i18n="noStudentsText">Add a student to start building your register.</span><button class="button button-primary" data-go="register" data-i18n="addFirstStudent">Add first student</button></div>
+          </article>
+          <article class="panel quick-panel">
+            <div class="panel-heading"><div><h2 data-i18n="quickActions">Quick actions</h2><p data-i18n="quickText">Common tasks, close at hand</p></div></div>
+            <button class="quick-action" data-go="register"><span class="quick-icon green">＋</span><span><strong data-i18n="addStudent">Add a student</strong><small data-i18n="addStudentText">Create a student record</small></span><span class="arrow">→</span></button>
+            <button class="quick-action" data-go="attendance"><span class="quick-icon blue">✓</span><span><strong data-i18n="takeAttendance">Take attendance</strong><small data-i18n="takeAttendanceText">Record daily presence</small></span><span class="arrow">→</span></button>
+            <button class="quick-action" data-go="assessment"><span class="quick-icon amber">▤</span><span><strong data-i18n="enterAssessment">Enter assessment</strong><small data-i18n="enterAssessmentText">Manage course results</small></span><span class="arrow">→</span></button>
+            <button class="quick-action" data-go="reports"><span class="quick-icon purple">▧</span><span><strong data-i18n="viewReports">View reports</strong><small data-i18n="viewReportsText">Review academic summaries</small></span><span class="arrow">→</span></button>
+          </article>
+        </div>
+        <footer class="page-footer"><span>SMIS <span class="footer-dot">•</span> <span data-i18n="starterVersion">Starter workspace v1.0</span></span><span data-i18n="demoOnly">Demo interface · No real student data stored</span></footer>
+      </section>
+
+      <section class="page" id="page-register">
+        <div class="page-intro"><div><div class="eyebrow" data-i18n="studentRecords">STUDENT RECORDS</div><h1 data-i18n="registerTitle">Student Register</h1><p data-i18n="registerIntro">Create and manage student records in this local demo.</p></div><button class="button button-primary" id="showStudentForm">＋ <span data-i18n="newStudent">New student</span></button></div>
+        <div class="panel form-panel hidden" id="studentFormPanel">
+          <div class="panel-heading"><div><h2 data-i18n="newStudent">New student</h2><p data-i18n="reviewBeforeSave">Review the details before confirming the save.</p></div><button class="icon-button" id="closeStudentForm" aria-label="Close">×</button></div>
+          <form id="studentForm">
+            <div class="form-grid">
+              <label><span data-i18n="firstName">First name *</span><input name="firstName" required maxlength="80"></label>
+              <label><span data-i18n="fatherName">Father's name *</span><input name="fatherName" required maxlength="80"></label>
+              <label><span data-i18n="grandfatherName">Grandfather's name</span><input name="grandfatherName" maxlength="80"></label>
+              <label><span data-i18n="motherName">Mother's name</span><input name="motherName" maxlength="80"></label>
+              <label><span data-i18n="phone">Phone</span><input name="phone" type="tel" maxlength="30"></label>
+              <label><span data-i18n="department">Department *</span><input name="department" required maxlength="100"></label>
+              <label><span data-i18n="batch">Batch / class *</span><input name="batch" required maxlength="60"></label>
+              <label><span data-i18n="studentCode">Student code</span><input name="code" id="studentCodeInput" placeholder="Auto-generated if empty" maxlength="60"></label>
+            </div>
+            <div class="form-note"><span>ⓘ</span><span data-i18n="demoStorageNote">Demo only: records stay in this browser and are not securely backed up or shared.</span></div>
+            <div class="form-actions"><button type="button" class="button button-secondary" id="cancelStudentForm" data-i18n="cancel">Cancel</button><button type="submit" class="button button-primary" data-i18n="reviewSave">Review & save</button></div>
+          </form>
+        </div>
+        <div class="panel">
+          <div class="panel-heading register-toolbar"><div><h2 data-i18n="allStudents">All students</h2><p id="studentCountLabel">0 records</p></div><input class="search-input" id="studentSearch" placeholder="Search name, code, department..." data-i18n-placeholder="searchStudents"></div>
+          <div class="table-wrap"><table><thead><tr><th data-i18n="student">STUDENT</th><th data-i18n="studentCode">STUDENT CODE</th><th data-i18n="department">DEPARTMENT</th><th data-i18n="batch">BATCH / CLASS</th><th data-i18n="status">STATUS</th><th data-i18n="actions">ACTIONS</th></tr></thead><tbody id="studentsTableBody"></tbody></table></div>
+          <div class="empty-state" id="registerEmpty"><div class="empty-icon">♙</div><strong data-i18n="noStudents">No students yet</strong><span data-i18n="noStudentsText">Add a student to start building your register.</span></div>
+        </div>
+        <footer class="page-footer"><span>SMIS <span class="footer-dot">•</span> <span data-i18n="starterVersion">Starter workspace v1.0</span></span><span data-i18n="demoOnly">Demo interface · No real student data stored</span></footer>
+      </section>
+
+      <section class="page" id="page-attendance">
+        <div class="page-intro"><div><div class="eyebrow" data-i18n="dailyRecords">DAILY RECORDS</div><h1 data-i18n="attendanceTitle">Attendance</h1><p data-i18n="attendanceIntro">Mark attendance for the students in your local demo register.</p></div><label class="date-field"><span data-i18n="attendanceDate">Attendance date</span><input type="date" id="attendanceDate"></label></div>
+        <div class="attendance-legend"><span><i class="legend-dot present"></i> <span data-i18n="present">Present</span></span><span><i class="legend-dot absent"></i> <span data-i18n="absent">Absent</span></span><span><i class="legend-dot permission"></i> <span data-i18n="permission">Permission</span></span></div>
+        <div class="panel"><div class="panel-heading"><div><h2 data-i18n="takeAttendance">Take attendance</h2><p data-i18n="attendanceSaveNote">Changes apply to this browser demo only.</p></div><button class="button button-secondary" id="markAllPresent" data-i18n="markAllPresent">Mark all present</button></div><div class="table-wrap"><table><thead><tr><th data-i18n="student">STUDENT</th><th data-i18n="studentCode">STUDENT CODE</th><th data-i18n="attendanceStatus">ATTENDANCE STATUS</th></tr></thead><tbody id="attendanceTableBody"></tbody></table></div><div class="empty-state" id="attendanceEmpty"><div class="empty-icon">✓</div><strong data-i18n="noStudents">No students yet</strong><span data-i18n="attendanceEmptyText">Register students before taking attendance.</span><button class="button button-primary" data-go="register" data-i18n="goRegister">Go to Student Register</button></div></div>
+        <footer class="page-footer"><span>SMIS <span class="footer-dot">•</span> <span data-i18n="starterVersion">Starter workspace v1.0</span></span><span data-i18n="demoOnly">Demo interface · No real student data stored</span></footer>
+      </section>
+
+      <section class="page" id="page-assessment">
+        <div class="page-intro"><div><div class="eyebrow" data-i18n="academicRecords">ACADEMIC RECORDS</div><h1 data-i18n="assessmentTitle">Assessment</h1><p data-i18n="assessmentIntro">Assessment entry and approval workflows will be connected in a later build step.</p></div></div>
+        <div class="placeholder-grid"><article class="panel placeholder-card"><span class="placeholder-icon amber">▤</span><h2 data-i18n="assessmentSetup">Assessment setup</h2><p data-i18n="assessmentSetupText">Configure courses, assessment types, maximum marks, weights, and pass marks.</p><span class="pill pill-planned" data-i18n="planned">Planned</span></article><article class="panel placeholder-card"><span class="placeholder-icon blue">✓</span><h2 data-i18n="resultApproval">Result approval</h2><p data-i18n="resultApprovalText">Authorized academic staff will review and publish results before students can see them.</p><span class="pill pill-planned" data-i18n="planned">Planned</span></article></div>
+        <div class="info-panel"><strong data-i18n="important">Important</strong><p data-i18n="assessmentSafety">Do not use this prototype to store real grades. Secure accounts, database permissions, and audit logs must be implemented and tested first.</p></div>
+      </section>
+
+      <section class="page" id="page-rank">
+        <div class="page-intro"><div><div class="eyebrow" data-i18n="academicRecords">ACADEMIC RECORDS</div><h1 data-i18n="rankTitle">Rank</h1><p data-i18n="rankIntro">Rank calculation will use approved assessment results and institution rules.</p></div></div>
+        <div class="panel empty-feature"><div class="large-feature-icon">↗</div><h2 data-i18n="rankNotReady">Rank calculation is not connected yet</h2><p data-i18n="rankNotReadyText">The next assessment phase will add institution-configurable rank scope, tie handling, and recalculation after approved grade changes.</p><span class="pill pill-planned" data-i18n="planned">Planned</span></div>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="page-intro"><div><div class="eyebrow" data-i18n="institutionInsights">INSTITUTION INSIGHTS</div><h1 data-i18n="reportsTitle">Reports</h1><p data-i18n="reportsIntro">Reporting cards will become live when the attendance and assessment modules are connected.</p></div></div>
+        <div class="placeholder-grid"><article class="panel placeholder-card"><span class="placeholder-icon green">♙</span><h2 data-i18n="studentReports">Student reports</h2><p data-i18n="studentReportsText">Individual monthly and yearly summaries, enrollment lists, and student status reports.</p><span class="pill pill-planned" data-i18n="planned">Planned</span></article><article class="panel placeholder-card"><span class="placeholder-icon purple">▧</span><h2 data-i18n="attendanceReports">Attendance reports</h2><p data-i18n="attendanceReportsText">Attendance percentages, repeated absences, and date-range summaries.</p><span class="pill pill-planned" data-i18n="planned">Planned</span></article></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="page-intro"><div><div class="eyebrow" data-i18n="configuration">CONFIGURATION</div><h1 data-i18n="settingsTitle">Settings</h1><p data-i18n="settingsIntro">These are preview settings; secure institution settings require authenticated storage.</p></div></div>
+        <div class="settings-list">
+          <article class="panel settings-item"><span class="settings-icon green">文</span><div><h2 data-i18n="languageSetting">Language</h2><p data-i18n="languageSettingText">Choose English or Amharic for this interface.</p></div><select id="settingsLanguage"><option value="en">English</option><option value="am">አማርኛ</option></select></article>
+          <article class="panel settings-item"><span class="settings-icon blue">▦</span><div><h2 data-i18n="institutionSetting">Institution profile</h2><p data-i18n="institutionSettingText">Institution name and logo settings will be permission-controlled.</p></div><span class="pill pill-planned" data-i18n="planned">Planned</span></article>
+          <article class="panel settings-item"><span class="settings-icon amber">⚿</span><div><h2 data-i18n="accessSetting">Users & permissions</h2><p data-i18n="accessSettingText">Admin-managed accounts, role permissions, and audit history.</p></div><span class="pill pill-planned" data-i18n="planned">Planned</span></article>
+          <article class="panel settings-item"><span class="settings-icon purple">◷</span><div><h2 data-i18n="calendarSetting">Calendar & academic year</h2><p data-i18n="calendarSettingText">Institution-specific calendar, terms, and academic-year rules.</p></div><span class="pill pill-planned" data-i18n="planned">Planned</span></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal">
+      <div class="modal-symbol">✓</div><h2 id="confirmTitle" data-i18n="confirmStudent">Confirm student details</h2><p data-i18n="confirmText">Please check these details before saving the student.</p>
+      <div class="review-grid" id="reviewGrid"></div>
+      <div class="modal-actions"><button class="button button-secondary" id="editReview" data-i18n="goBackEdit">Go back & edit</button><button class="button button-primary" id="confirmSave" data-i18n="sureSave">Sure, save</button></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
